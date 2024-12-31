@@ -1,5 +1,11 @@
+import View.ClassGUI;
+
+import javax.swing.*;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        ClassGUI classGUI = new ClassGUI();
+
+
     }
 }
