@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.Array;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,22 +79,6 @@ public class ClassGUI extends JFrame  {
 
         checkInternetConnection(new ClassController().checkInternetConnection("www.google.com"));
 
-        comboBox.addActionListener(e -> {
-            classController = new ClassController();
-            String inputCur = comboBox.getSelectedItem().toString();
-            String outputCur = comboBox2.getSelectedItem().toString();
-
-            classController.getIOCurrencies(inputCur,outputCur,1);
-        });
-
-        comboBox2.addActionListener(e -> {
-            classController = new ClassController();
-            String inputCur = comboBox.getSelectedItem().toString();
-            String outputCur = comboBox2.getSelectedItem().toString();
-
-            classController.getIOCurrencies(inputCur,outputCur,1);
-        });
-
         inputField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -103,6 +88,15 @@ public class ClassGUI extends JFrame  {
                     e.consume();
                 }
             }
+        });
+
+        button.addActionListener(e -> {
+            classController = new ClassController();
+            classController.getIOCurrencies(comboBox.getSelectedItem().toString(),comboBox2.getSelectedItem().toString(),Integer.parseInt(inputField.getText()));
+            if (checkItemSelection() == false) {return;}
+            int rs = classController.callFunctionCurrencyConvert(comboBox.getSelectedItem().toString(),comboBox2.getSelectedItem().toString(),Integer.parseInt(inputField.getText()));
+            NumberFormat nf = NumberFormat.getInstance();
+            JOptionPane.showMessageDialog(null, nf.format(rs) + " " + comboBox2.getSelectedItem());
         });
 
     }
@@ -120,4 +114,11 @@ public class ClassGUI extends JFrame  {
         }
     }
 
+    public boolean checkItemSelection() {
+        if (comboBox.getSelectedItem() == comboBox2.getSelectedItem()) {
+            JOptionPane.showMessageDialog(null, "Please select different currencies");
+            return false;
+        }
+        return true;
+    }
 }

@@ -1,45 +1,92 @@
 package Model;
 
-public class Currency {
-    private String inputCyrrency;
-    private String outputCyrrency;
-    private double amount;
 
-    public Currency(String inputCyrrency, String outputCyrrency, double amount) {
-        this.inputCyrrency = inputCyrrency;
-        this.outputCyrrency = outputCyrrency;
+
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.text.NumberFormat;
+
+
+public class Currency {
+
+    private String fcurrency, scurrency;
+    private int amount;
+
+    public Currency() {}
+    public Currency(String fcurrency, String scurrency, int amount) {
+        this.fcurrency = fcurrency;
+        this.scurrency = scurrency;
         this.amount = amount;
     }
 
 
-    //
-    public int convertCurrency(String inputCur, String outputCur, int amount) {
-
-        return 0;
+    public String getFcurrency() {
+        return fcurrency;
     }
 
-    //getters and setters
-    public String getInputCyrrency() {
-        return inputCyrrency;
+    public void setFcurrency(String fcurrency) {
+        this.fcurrency = fcurrency;
     }
 
-    public void setInputCyrrency(String inputCyrrency) {
-        this.inputCyrrency = inputCyrrency;
+    public String getScurrency() {
+        return scurrency;
     }
 
-    public String getOutputCyrrency() {
-        return outputCyrrency;
+    public void setScurrency(String scurrency) {
+        this.scurrency = scurrency;
     }
 
-    public void setOutputCyrrency(String outputCyrrency) {
-        this.outputCyrrency = outputCyrrency;
-    }
-
-    public double getAmount() {
+    public int getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(int amount) {
         this.amount = amount;
     }
+
+    public String callAPI(String key , String fcurrency, String scurrency, int amount){ {
+        try{
+            URL url = new URL("https://api.exchangeratesapi.io/v1/latest?access_key="+key+"&symbols="+fcurrency+","+scurrency);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+            int resCode = con.getResponseCode();
+            if (resCode == HttpURLConnection.HTTP_OK) {
+                BufferedReader in  = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                String inputLine;
+                StringBuffer response = new StringBuffer();
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+                return response.toString();
+
+
+
+            }else {
+                System.out.println("Error Code: " + resCode);
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    return "null";
+    }
+
+    public int convertCurrency(String res) {
+
+        JSONObject obj = new JSONObject(res.toString());
+        JSONObject rates = obj.getJSONObject("rates");
+        double rate = rates.getDouble(scurrency);
+        double result = amount * rate;
+        NumberFormat nf = NumberFormat.getInstance();
+
+        System.out.println(amount + " " + fcurrency + " is equal to " + (int)result + " " + scurrency);
+        return (int) result;
+    }
+
 }

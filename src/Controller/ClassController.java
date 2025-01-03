@@ -8,10 +8,12 @@ import java.net.InetAddress;
 
 public class ClassController implements CurrenyController {
 
-
+    private final String api_key = "your_api_key";
     private ClassGUI gui;
     private Currency curl;
-    public ClassController(){}
+    public ClassController(){
+       curl = new Currency();
+    }
 
     public void setGui(ClassGUI gui) {
         this.gui = gui;
@@ -33,13 +35,15 @@ public class ClassController implements CurrenyController {
 
     @Override
     public int callFunctionCurrencyConvert(String inputCur, String outputCur, int amount) {
-        return 0;
+        String res = curl.callAPI(api_key, inputCur, outputCur, amount);
+        return curl.convertCurrency(res);
     }
 
     @Override
     public void getIOCurrencies(String inputCur, String outputCur, int amount) {
-        curl = new Currency(inputCur, outputCur, amount);
-        System.out.println( curl.getInputCyrrency() + " " + curl.getAmount() + " " + curl.getOutputCyrrency());
+        curl.setFcurrency(inputCur);
+        curl.setScurrency(outputCur);
+        curl.setAmount(amount);
     }
 
 
