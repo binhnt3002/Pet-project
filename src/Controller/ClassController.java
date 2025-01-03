@@ -27,7 +27,7 @@ public class ClassController implements CurrenyController {
 
     @Override
     public int callFunctionCurrencyConvert(String inputCur, String outputCur, int amount) {
-        String api_key = "13ae1abfbd0bffea2ab1491af74770a1";
+        String api_key = "your api key";
         String res = curl.callAPI(api_key, inputCur, outputCur);
         return curl.convertCurrency(res);
     }
