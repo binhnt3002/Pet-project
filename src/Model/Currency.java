@@ -1,14 +1,12 @@
 package Model;
 
 
-
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.NumberFormat;
 
 
 public class Currency {
@@ -17,38 +15,21 @@ public class Currency {
     private int amount;
 
     public Currency() {}
-    public Currency(String fcurrency, String scurrency, int amount) {
-        this.fcurrency = fcurrency;
-        this.scurrency = scurrency;
-        this.amount = amount;
-    }
 
-
-    public String getFcurrency() {
-        return fcurrency;
-    }
 
     public void setFcurrency(String fcurrency) {
         this.fcurrency = fcurrency;
-    }
-
-    public String getScurrency() {
-        return scurrency;
     }
 
     public void setScurrency(String scurrency) {
         this.scurrency = scurrency;
     }
 
-    public int getAmount() {
-        return amount;
-    }
-
     public void setAmount(int amount) {
         this.amount = amount;
     }
 
-    public String callAPI(String key , String fcurrency, String scurrency, int amount){ {
+    public String callAPI(String key , String fcurrency, String scurrency){ {
         try{
             URL url = new URL("https://api.exchangeratesapi.io/v1/latest?access_key="+key+"&symbols="+fcurrency+","+scurrency);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -57,7 +38,7 @@ public class Currency {
             if (resCode == HttpURLConnection.HTTP_OK) {
                 BufferedReader in  = new BufferedReader(new InputStreamReader(con.getInputStream()));
                 String inputLine;
-                StringBuffer response = new StringBuffer();
+                StringBuilder response = new StringBuilder();
                 while ((inputLine = in.readLine()) != null) {
                     response.append(inputLine);
                 }
@@ -79,11 +60,11 @@ public class Currency {
 
     public int convertCurrency(String res) {
 
-        JSONObject obj = new JSONObject(res.toString());
+        JSONObject obj = new JSONObject(res);
         JSONObject rates = obj.getJSONObject("rates");
         double rate = rates.getDouble(scurrency);
         double result = amount * rate;
-        NumberFormat nf = NumberFormat.getInstance();
+
 
         System.out.println(amount + " " + fcurrency + " is equal to " + (int)result + " " + scurrency);
         return (int) result;

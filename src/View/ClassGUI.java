@@ -6,18 +6,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.sql.Array;
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 
 public class ClassGUI extends JFrame  {
 
-    private JPanel topPanel;
-    private JButton button;
-    private JTextField inputField;
-    private JLabel fCurrency,sCurrency;
-    private JComboBox comboBox, comboBox2;
+    private final JTextField inputField;
+    private final JComboBox<Object> comboBox;
+    private final JComboBox<Object> comboBox2;
 
     private ClassController classController;
     private enum currency {
@@ -34,10 +30,9 @@ public class ClassGUI extends JFrame  {
         setLocationRelativeTo(null);
 
 
-
-        topPanel = new JPanel();
-        fCurrency = new JLabel("Choose currency: ");
-        sCurrency = new JLabel("Choose currency: ");
+        JPanel topPanel = new JPanel();
+        JLabel fCurrency = new JLabel("Choose currency: ");
+        JLabel sCurrency = new JLabel("Choose currency: ");
         comboBox = new JComboBox<>();
         for (currency currency : currency.values()) {
             comboBox.addItem(currency);
@@ -64,8 +59,7 @@ public class ClassGUI extends JFrame  {
         inputField.setFont(new Font("Arial",Font.BOLD,30));
 
 
-
-        button = new JButton("Convert");
+        JButton button = new JButton("Convert");
         button.setSize(JFrame.WIDTH,30);
 
 
@@ -92,8 +86,8 @@ public class ClassGUI extends JFrame  {
 
         button.addActionListener(e -> {
             classController = new ClassController();
-            classController.getIOCurrencies(comboBox.getSelectedItem().toString(),comboBox2.getSelectedItem().toString(),Integer.parseInt(inputField.getText()));
-            if (checkItemSelection() == false) {return;}
+            classController.getIOCurrencies(Objects.requireNonNull(comboBox.getSelectedItem()).toString(), Objects.requireNonNull(comboBox2.getSelectedItem()).toString(),Integer.parseInt(inputField.getText()));
+            if (!checkItemSelection()) {return;}
             int rs = classController.callFunctionCurrencyConvert(comboBox.getSelectedItem().toString(),comboBox2.getSelectedItem().toString(),Integer.parseInt(inputField.getText()));
             NumberFormat nf = NumberFormat.getInstance();
             JOptionPane.showMessageDialog(null, nf.format(rs) + " " + comboBox2.getSelectedItem());
@@ -104,10 +98,9 @@ public class ClassGUI extends JFrame  {
     public void checkInternetConnection(boolean rs) {
         int choice = -1;
         Object[] options = {"Try Again", "Quit"};
-        if (rs == false) {choice = JOptionPane.showOptionDialog(this,"No internet connection","Error",JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE, null, options, options[0]);}
+        if (!rs) {choice = JOptionPane.showOptionDialog(this,"No internet connection","Error",JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE, null, options, options[0]);}
         switch (choice) {
             case 0:
-                ClassGUI classGUI = new ClassGUI();
                 break;
             case 1:
                 System.exit(0);

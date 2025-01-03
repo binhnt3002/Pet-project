@@ -1,22 +1,14 @@
 package Controller;
 
 import Model.Currency;
-import View.ClassGUI;
 
-import javax.swing.*;
 import java.net.InetAddress;
 
 public class ClassController implements CurrenyController {
 
-    private final String api_key = "your_api_key";
-    private ClassGUI gui;
-    private Currency curl;
+    private final Currency curl;
     public ClassController(){
        curl = new Currency();
-    }
-
-    public void setGui(ClassGUI gui) {
-        this.gui = gui;
     }
 
     @Override
@@ -35,7 +27,8 @@ public class ClassController implements CurrenyController {
 
     @Override
     public int callFunctionCurrencyConvert(String inputCur, String outputCur, int amount) {
-        String res = curl.callAPI(api_key, inputCur, outputCur, amount);
+        String api_key = "13ae1abfbd0bffea2ab1491af74770a1";
+        String res = curl.callAPI(api_key, inputCur, outputCur);
         return curl.convertCurrency(res);
     }
 
