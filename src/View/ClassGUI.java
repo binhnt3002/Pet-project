@@ -85,6 +85,7 @@ public class ClassGUI extends JFrame  {
         });
 
         button.addActionListener(e -> {
+            inputField.setEditable(false);
             classController = new ClassController();
             classController.getIOCurrencies(Objects.requireNonNull(comboBox.getSelectedItem()).toString(), Objects.requireNonNull(comboBox2.getSelectedItem()).toString(),Integer.parseInt(inputField.getText()));
             if (!checkItemSelection()) {return;}
