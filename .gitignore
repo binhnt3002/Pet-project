@@ -1,0 +1,29 @@
+# Maven specific
+target/
+pom.xml.versionsBackup
+dependency-reduced-pom.xml
+
+# IDE files (if you use one)
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+bin/
+*.swp
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log
+
+# Build output
+*.jar
+*.war
+*.ear
+
+# ignore gitigore
+.gitigore
+settings.json
