@@ -7,7 +7,7 @@ import com.petproject.model.Currency;
 public class ClassController implements CurrenyController {
 
     private final Currency curl;
-    private String api_key = "";
+    private String api_key ;
     public ClassController(){
         curl = new Currency();
     }
@@ -28,7 +28,11 @@ public class ClassController implements CurrenyController {
 
     @Override
     public int callFunctionCurrencyConvert(String inputCur, String outputCur, int amount) {
-        String res = curl.callAPI(api_key, inputCur, outputCur);
+        System.out.println(this.api_key);
+        System.out.println(inputCur);
+        System.out.println(outputCur);
+
+        String res = curl.callAPI(this.api_key, inputCur, outputCur);
         return curl.convertCurrency(res);
     }
 
@@ -39,13 +43,13 @@ public class ClassController implements CurrenyController {
         curl.setAmount(amount);
     }
 
-    public void getAPIkey(String key){
-        this.api_key = key;
+    public String getApi_key() {
+        return api_key;
     }
 
-    public int api_keyCheck(){
-        return api_key == "" ? 1 : 0;
-    } 
+    public void setApi_key(String api_key) {
+        this.api_key = api_key;
+    }
 
 
 }

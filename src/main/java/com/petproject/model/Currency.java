@@ -30,7 +30,7 @@ public class Currency {
 
     public String callAPI(String key , String fcurrency, String scurrency){ {
         try{
-            URL url = new URL("https://api.exchangeratesapi.io/v1/latest?access_key="+key+"&symbols="+fcurrency+","+scurrency);
+            URL url = new URL("https://api.exchangeratesapi.io/v1/latest?access_key="+key+"&symbols="+fcurrency+","+scurrency );
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             int resCode = con.getResponseCode();
@@ -43,9 +43,6 @@ public class Currency {
                 }
                 in.close();
                 return response.toString();
-
-
-
             }else {
                 System.out.println("Error Code: " + resCode);
             }
@@ -58,15 +55,12 @@ public class Currency {
     }
 
     public int convertCurrency(String res) {
-
         JSONObject obj = new JSONObject(res);
-        JSONObject rates = obj.getJSONObject("rates");
+        JSONObject rates = obj.getJSONObject("rates");        
         double rate = rates.getDouble(scurrency);
         double result = amount * rate;
-
-
         System.out.println(amount + " " + fcurrency + " is equal to " + (int)result + " " + scurrency);
-        return (int) result;
+        return (int) 1;
     }
 
 }
