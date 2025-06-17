@@ -13,16 +13,16 @@ public class GUI extends JFrame  {
     private final JComboBox<Object> comboBox;
     private final JComboBox<Object> comboBox2;
 
-    private ClassController classController;
+    private static ClassController classController;
     private NumericTextField numberfield;
     private enum currency {
         USD,EUR,JPY,GBP,CNY,INR,AUD,VND
     }
 
     static{
-        if (true) {
-        fieldGetApiKey();
-            
+        classController = new ClassController();
+        if (classController.getApi_key() == null) {
+            fieldGetApiKey();
         }
     }
 
@@ -71,17 +71,24 @@ public class GUI extends JFrame  {
 
         setVisible(true);
 
-        checkInternetConnection(new ClassController().checkInternetConnection("www.google.com"));   
+        checkInternetConnection(classController.checkInternetConnection("www.google.com"));   
 
 
 
         button.addActionListener(e -> {
             inputField.setEditable(false);
-            classController = new ClassController();
-            classController.getIOCurrencies(Objects.requireNonNull(comboBox.getSelectedItem()).toString(), Objects.requireNonNull(comboBox2.getSelectedItem()).toString(),Integer.parseInt(inputField.getText()));
+            System.out.println("dbg");
+
+            classController.getIOCurrencies(String.valueOf(comboBox.getSelectedItem()), String.valueOf(comboBox2.getSelectedItem()),Integer.valueOf(numberfield.getText()));
+            System.out.println("dbg2");
             if (!checkItemSelection()) {return;}
-            int rs = classController.callFunctionCurrencyConvert(comboBox.getSelectedItem().toString(),comboBox2.getSelectedItem().toString(),Integer.parseInt(inputField.getText()));
+            System.out.println("dbg3");
+            int rs = classController.callFunctionCurrencyConvert("USD","EUR",1);
+            System.out.println("dbg4");
             NumberFormat nf = NumberFormat.getInstance();
+            System.out.println("dbg5");
+            System.out.println(nf.format(rs));
+            System.out.println("dbg6");
             JOptionPane.showMessageDialog(null, nf.format(rs) + " " + comboBox2.getSelectedItem());
         });
 
@@ -113,10 +120,27 @@ public class GUI extends JFrame  {
         JFrame panel = new JFrame();
         JTextField tf = new JTextField();
         JLabel lb = new JLabel("Enter your API key");
+        JButton okButton = new JButton("Enter");
+
         panel.add(lb,BorderLayout.NORTH);
-        panel.add(tf,BorderLayout.SOUTH);
+        panel.add(tf,BorderLayout.CENTER);
+        panel.add(okButton,BorderLayout.SOUTH);
         panel.setSize(400,300);
         panel.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         panel.setVisible(true);
+
+        okButton.addActionListener(e ->{
+            if (tf.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Invalid input !");
+            }else{
+                JOptionPane.showMessageDialog(null, "ok !");
+                classController.setApi_key(tf.getText().trim());;
+                panel.setVisible(false);
+            }
+
+        });
+
     }
+
+
 }
