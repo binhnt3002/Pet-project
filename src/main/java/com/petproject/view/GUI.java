@@ -77,18 +77,11 @@ public class GUI extends JFrame  {
 
         button.addActionListener(e -> {
             inputField.setEditable(false);
-            System.out.println("dbg");
-
             classController.getIOCurrencies(String.valueOf(comboBox.getSelectedItem()), String.valueOf(comboBox2.getSelectedItem()),Integer.valueOf(numberfield.getText()));
-            System.out.println("dbg2");
             if (!checkItemSelection()) {return;}
-            System.out.println("dbg3");
-            int rs = classController.callFunctionCurrencyConvert("USD","EUR",1);
-            System.out.println("dbg4");
+            int rs = classController.callFunctionCurrencyConvert(String.valueOf(comboBox.getSelectedItem()), String.valueOf(comboBox2.getSelectedItem()),Integer.valueOf(numberfield.getText()));
             NumberFormat nf = NumberFormat.getInstance();
-            System.out.println("dbg5");
             System.out.println(nf.format(rs));
-            System.out.println("dbg6");
             JOptionPane.showMessageDialog(null, nf.format(rs) + " " + comboBox2.getSelectedItem());
         });
 
