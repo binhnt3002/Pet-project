@@ -1,5 +1,7 @@
 package com.petproject.controller;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.InetAddress;
 
 import com.petproject.model.Currency;
@@ -51,5 +53,11 @@ public class ClassController implements CurrenyController {
         this.api_key = api_key;
     }
 
+    public String saveKey(String api_key) throws IOException{
+        FileWriter wf = new FileWriter("savekey.txt");
+        wf.write(api_key);
+        wf.close();
+        return "success";
+    }
 
 }
