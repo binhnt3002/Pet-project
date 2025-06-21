@@ -4,6 +4,7 @@ import javax.swing.*;
 import com.petproject.controller.ClassController;
 
 import java.awt.*;
+import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.Objects;
 
@@ -127,7 +128,12 @@ public class GUI extends JFrame  {
                 JOptionPane.showMessageDialog(null, "Invalid input !");
             }else{
                 JOptionPane.showMessageDialog(null, "ok !");
-                classController.setApi_key(tf.getText().trim());;
+                classController.setApi_key(tf.getText().trim());
+                try {
+                    classController.saveKey(tf.getText());
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
                 panel.setVisible(false);
             }
 
