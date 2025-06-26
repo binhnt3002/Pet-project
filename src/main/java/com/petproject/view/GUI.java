@@ -21,14 +21,7 @@ public class GUI extends JFrame  {
 
     static{
         classController = new ClassController();
-        try {
-            classController.readAndSetKey();
-        } catch (Exception e) {
-            System.err.println(e);
-        }
-        if (classController.getApi_key() == null) {
-            fieldGetApiKey();
-        }
+        
     }
 
 
@@ -74,7 +67,19 @@ public class GUI extends JFrame  {
         add(numberfield,BorderLayout.CENTER);
         add(button,BorderLayout.SOUTH);
 
-        setVisible(true);
+        try {
+            classController.readAndSetKey();
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+        if (classController.getApi_key() == null) {
+            fieldGetApiKey();
+            setVisible(false);
+        }else{
+            setVisible(true);
+        }
+        
+        
 
         checkInternetConnection(classController.checkInternetConnection("www.google.com"));   
 
@@ -115,17 +120,20 @@ public class GUI extends JFrame  {
     }
 
     public static void fieldGetApiKey(){
-        JFrame panel = new JFrame();
+        JFrame panel = new JFrame("Enter your API key");
         JTextField tf = new JTextField();
-        JLabel lb = new JLabel("Enter your API key");
         JButton okButton = new JButton("Enter");
 
-        panel.add(lb,BorderLayout.NORTH);
+        tf.setFont(new Font("Arial",Font.BOLD,30));
+
+        panel.setLocationRelativeTo(null);
         panel.add(tf,BorderLayout.CENTER);
         panel.add(okButton,BorderLayout.SOUTH);
-        panel.setSize(400,300);
         panel.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        panel.setSize(500, 150);
         panel.setVisible(true);
+        
+        
 
         okButton.addActionListener(e ->{
             if (tf.getText().isEmpty()) {
