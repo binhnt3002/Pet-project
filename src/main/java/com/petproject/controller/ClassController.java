@@ -1,5 +1,8 @@
 package com.petproject.controller;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -60,4 +63,12 @@ public class ClassController implements CurrenyController {
         return "success";
     }
 
+    public void readAndSetKey() throws IOException {
+        File f = new File("savekey.txt");
+        if (f.exists()) {
+            BufferedReader bfr = new BufferedReader(new FileReader(f));
+            setApi_key(bfr.readLine());
+            bfr.close();
+        }
+    }
 }

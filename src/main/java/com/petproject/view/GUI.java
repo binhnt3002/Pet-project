@@ -6,7 +6,6 @@ import com.petproject.controller.ClassController;
 import java.awt.*;
 import java.io.IOException;
 import java.text.NumberFormat;
-import java.util.Objects;
 
 public class GUI extends JFrame  {
 
@@ -22,6 +21,11 @@ public class GUI extends JFrame  {
 
     static{
         classController = new ClassController();
+        try {
+            classController.readAndSetKey();
+        } catch (Exception e) {
+            System.err.println(e);
+        }
         if (classController.getApi_key() == null) {
             fieldGetApiKey();
         }
@@ -136,10 +140,6 @@ public class GUI extends JFrame  {
                 }
                 panel.setVisible(false);
             }
-
         });
-
     }
-
-
 }

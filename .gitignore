@@ -27,3 +27,6 @@ Thumbs.db
 # ignore gitigore
 .gitigore
 settings.json
+
+# igonore savekey.txt
+savekey.txt
