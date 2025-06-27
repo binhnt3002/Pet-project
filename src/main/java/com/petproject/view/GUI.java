@@ -33,7 +33,6 @@ public class GUI extends JFrame  {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-
         JPanel topPanel = new JPanel();
         JLabel fCurrency = new JLabel("Choose currency: ");
         JLabel sCurrency = new JLabel("Choose currency: ");
@@ -139,14 +138,14 @@ public class GUI extends JFrame  {
             if (tf.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Invalid input !");
             }else{
-                JOptionPane.showMessageDialog(null, "ok !");
-                classController.setApi_key(tf.getText().trim());
-                try {
-                    classController.saveKey(tf.getText());
-                } catch (IOException e1) {
-                    e1.printStackTrace();
+                String validkey = classController.checkKey(tf.getText());
+                System.out.println(validkey);
+                if (!validkey.equals("ok")) {
+                    JOptionPane.showMessageDialog(null,"Try again ! key not valid");
+                }else{
+                    JOptionPane.showMessageDialog(null, "ok !");
+                    panel.setVisible(false);
                 }
-                panel.setVisible(false);
             }
         });
     }

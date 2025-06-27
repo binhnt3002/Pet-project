@@ -60,7 +60,15 @@ public class Currency {
         double rate = rates.getDouble(scurrency);
         double result = amount * rate;
         System.out.println(amount + " " + fcurrency + " is equal to " + (int)result + " " + scurrency);
-        return (int) 1;
+        return (int) result;
+    }
+
+    public String checkKeyAPI(String key){
+        String res = callAPI(key, "USD", "EUR");
+        if (res.equals("null")) {
+            return "Invalid API key";
+        }
+        return "ok";
     }
 
 }

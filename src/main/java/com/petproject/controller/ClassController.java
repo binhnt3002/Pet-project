@@ -56,6 +56,20 @@ public class ClassController implements CurrenyController {
         this.api_key = api_key;
     }
 
+
+    public String checkKey(String k ){
+        if(curl.checkKeyAPI(k).equals("ok")){
+            try  {
+                setApi_key(k);
+                saveKey(k);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "ok";
+            }
+        }
+        return "Invalid API key";
+    }
+
     public String saveKey(String api_key) throws IOException{
         FileWriter wf = new FileWriter("savekey.txt");
         wf.write(api_key);
