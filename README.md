@@ -1,6 +1,8 @@
 # Simple Currency convertor application
 this is a aplicantion that using Java Swing to build it
 It is simple that covert the currency we chose in menu then using API key to get rates from [ExchageRates](https://exchangeratesapi.io/)
+# Important
+Because this app using API from [ExchageRates](https://exchangeratesapi.io/), so please get key API from that first then you will able to use it. thank you
 # How to run 
 Fist clone the repo and build the **Dockerfile**
 ```
