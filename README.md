@@ -26,7 +26,7 @@ After that run **Xlaunch** and setting like :
  - Start no client
  - Disable access control
 
-Next find your host IP address by running ipconfig in the command prompt and noting your IPv4 address. Then, use the DISPLAY variable to point to your VcXsrv server, replacing YOUR_HOST_IP with your IP address.
+Next find your host IP address by running ipconfig in the command prompt and noting your IPv4 address. Then, use the `DISPLAY` variable to point to your VcXsrv server, replacing `YOUR_HOST_IP` with your IP address.
 ```
 docker run -e DISPLAY=host.docker.internal:0.0 exchange-app
 ```
