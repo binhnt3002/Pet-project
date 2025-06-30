@@ -28,8 +28,8 @@ public class GUI extends JFrame  {
 
     public GUI() {
         super("Currency Converter");
-        setSize(500,150);
         setResizable(false);
+        setSize(500,150);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -125,13 +125,13 @@ public class GUI extends JFrame  {
 
         tf.setFont(new Font("Arial",Font.BOLD,30));
 
+        panel.setResizable(false);
         panel.setLocationRelativeTo(null);
         panel.add(tf,BorderLayout.CENTER);
         panel.add(okButton,BorderLayout.SOUTH);
         panel.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         panel.setSize(500, 150);
         panel.setVisible(true);
-        panel.setResizable(false);
         
         
 
