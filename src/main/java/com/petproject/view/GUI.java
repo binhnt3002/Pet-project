@@ -131,6 +131,7 @@ public class GUI extends JFrame  {
         panel.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         panel.setSize(500, 150);
         panel.setVisible(true);
+        panel.setResizable(false);
         
         
 
